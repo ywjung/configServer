@@ -1,0 +1,65 @@
+# -- Server Port
+server:
+  port: 8900
+
+spring:
+  application:
+    name: config-svr
+  profiles:
+    active: default
+  output:
+    ansi:
+      enabled: DETECT
+
+info:
+  name: Configuration Service
+  more.detail: Configuration Service Using Sping Cloud Configuration & Git
+
+---
+
+spring:
+  profiles: default
+  boot:
+    admin:
+      client:
+        url: http://localhost:8081  # Spring Boot Admin 서버의 URL
+        # war 로 기동시 service-url 추가 해야줘됨.
+        instance:
+          service-url: http://localhost:8900
+  cloud:
+    config:
+      server:
+        git:
+#          uri: file://F:/elk78/GitRepository/es
+          uri: /home/ywjung/prog/gitRepository
+#          uri: https://github.com/yaboong/spring-cloud-config-repository
+#          basedir: es    # clone repo into this folder
+#          clone-on-start: true    # clone when service starts up
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8787/eureka/}
+
+logging:
+#  file:
+#    max-history: 7
+#    path: /www/es/svr/log/${server.port}/
+#  pattern:
+#    console: "%d %-5level %logger:%L : %msg%n"
+#    file: "%d %-5level [%thread] %logger:%L : %msg%n"
+  level:
+    root: info
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+#      base: /
+  #        include: health, info, metrics, shutdown, hystrix.stream
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      show-details: ALWAYS
