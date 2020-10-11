@@ -31,6 +31,6 @@ FROM adoptopenjdk:8-jdk-hotspot
 COPY --from=builder build/libs/*.jar app.jar
 
 # 컨테이너 Port 노출
-EXPOSE 8080
+EXPOSE 8900
 # jar 파일 실행
 ENTRYPOINT ["java","-jar","/app.jar"]
